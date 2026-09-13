@@ -31,7 +31,7 @@ export default function Header() {
         </form>
 
         <div className="ml-auto flex items-center gap-4 text-sm">
-          <span className="hidden text-paper/70 sm:inline">Cart logic arrives in Evaluation 2</span>
+          
           <div
             className="flex items-center gap-2 rounded-md border border-paper/20 px-3 py-1.5"
             aria-label="Cart placeholder, 0 items"
