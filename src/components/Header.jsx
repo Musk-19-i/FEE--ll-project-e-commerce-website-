@@ -15,8 +15,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-ink text-paper">
       <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6">
-        <Link to="/" className="shrink-0 font-display text-2xl tracking-tight">
-          Bazaar
+        <Link to="/" className="shrink-0 ">
+        <img src="/logo.png" alt="Bazaar" className="h-8 w-auto sm:h-9" />
         </Link>
 
         <form onSubmit={handleSearch} className="hidden flex-1 sm:block">
