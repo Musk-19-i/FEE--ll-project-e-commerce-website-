@@ -8,7 +8,7 @@ import { formatINR } from "../utils/currency";
 
 const MOCK_VARIANTS = {
   Color: ["Midnight Black", "Pearl White", "Ocean Blue"],
-  Storage: ["128 GB", "256 GB", "512 GB"],
+  
 };
 
 function stockLabel(stock) {
