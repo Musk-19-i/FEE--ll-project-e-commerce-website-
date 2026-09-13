@@ -29,20 +29,17 @@ export default function FilterSidebar() {
   const [minInput, setMinInput] = useState("");
   const [maxInput, setMaxInput] = useState("");
 
-  // Seed the price inputs once real bounds arrive from the API.
-  // Bounds come back in the API's raw price units; shown to the user in ₹.
+  
   useEffect(() => {
     if (bounds.max > 0 && minInput === "" && maxInput === "") {
       setMinInput(String(Math.round(toINR(bounds.min))));
       setMaxInput(String(Math.round(toINR(bounds.max))));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [bounds.max]);
 
   const applyPriceRange = useCallback(() => {
-    // Inputs are entered in ₹ by the user; convert back to the API's raw
-    // price units before storing, since selectors/filters compare against
-    // the unconverted product.price straight from DummyJSON.
+    
     const min = minInput === "" ? null : fromINR(Number(minInput));
     const max = maxInput === "" ? null : fromINR(Number(maxInput));
     dispatch(setPriceRange({ min, max }));

@@ -28,11 +28,11 @@ export default function ProductListing() {
     if (status === "idle") dispatch(loadProducts());
   }, [status, dispatch]);
 
-  // Lets a product-detail breadcrumb link (/?category=x) preselect a filter.
+  
   useEffect(() => {
     const category = searchParams.get("category");
     if (category && status === "succeeded") dispatch(setCategory(category));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [searchParams, status]);
 
   const retry = useCallback(() => dispatch(loadProducts()), [dispatch]);

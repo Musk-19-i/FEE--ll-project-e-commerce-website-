@@ -24,15 +24,13 @@ const initialFilters = {
 };
 
 const initialState = {
-  // Normalised: the raw product list lives here once, keyed nowhere else.
-  // Every other piece of derived data (filtered list, totals, price bounds)
-  // is computed by a selector instead of being duplicated in state.
+  
   items: [],
   categories: [],
-  status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
+  status: "idle", 
   error: null,
   filters: initialFilters,
-  sort: "featured", // 'featured' | 'price-asc' | 'price-desc' | 'rating-desc' | 'newest'
+  sort: "featured", 
   page: 1,
   pageSize: PAGE_SIZE,
 };

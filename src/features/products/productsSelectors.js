@@ -9,8 +9,7 @@ export const selectStatus = (state) => state.products.status;
 export const selectError = (state) => state.products.error;
 export const selectCategories = (state) => state.products.categories;
 
-// Every brand present in the catalogue, derived rather than stored separately
-// so it can never drift out of sync with the product list.
+
 export const selectAllBrands = createSelector(selectItems, (items) => {
   const brands = new Set(items.map((p) => p.brand).filter(Boolean));
   return Array.from(brands).sort();
@@ -22,8 +21,7 @@ export const selectPriceBounds = createSelector(selectItems, (items) => {
   return { min: Math.floor(Math.min(...prices)), max: Math.ceil(Math.max(...prices)) };
 });
 
-// The single source of truth for "what should currently be visible" —
-// applies category, brand, price, rating and search filters together (AND logic).
+
 export const selectFilteredProducts = createSelector(
   selectItems,
   selectFilters,
@@ -64,7 +62,7 @@ export const selectSortedProducts = createSelector(
       case "newest":
         return list.sort((a, b) => b.id - a.id);
       default:
-        return list; // 'featured' — API order
+        return list; 
     }
   }
 );
