@@ -1,10 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { fetchProductById } from "../api/productService";
 import { DetailSkeleton } from "../components/Loader";
 import ErrorState from "../components/ErrorState";
 import StarRating from "../components/StarRating";
 import { formatINR } from "../utils/currency";
+import { addToCart } from "../features/cart/cartSlice";
 
 const MOCK_VARIANTS = {
   Color: ["Midnight Black", "Pearl White", "Ocean Blue"],
@@ -19,15 +21,18 @@ function stockLabel(stock) {
 
 export default function ProductDetail() {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [status, setStatus] = useState("loading");
   const [error, setError] = useState(null);
   const [activeImage, setActiveImage] = useState(0);
   const [variant, setVariant] = useState({ Color: 0, Storage: 0 });
+  const [added, setAdded] = useState(false);
 
   const load = useCallback(() => {
     setStatus("loading");
     setError(null);
+    setAdded(false);
     fetchProductById(id)
       .then((data) => {
         setProduct(data);
@@ -66,6 +71,19 @@ export default function ProductDetail() {
   const strikePrice = hasDiscount
     ? formatINR(product.price / (1 - product.discountPercentage / 100))
     : null;
+
+  function handleAddToCart() {
+    dispatch(
+      addToCart({
+        id: product.id,
+        title: product.title,
+        thumbnail: product.thumbnail,
+        price: product.price,
+        stock: product.stock,
+      })
+    );
+    setAdded(true);
+  }
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
@@ -162,12 +180,21 @@ export default function ProductDetail() {
           </div>
 
           <button
+            onClick={handleAddToCart}
             disabled={product.stock === 0}
             className="mt-8 w-full rounded-md bg-marigold px-6 py-3 text-sm font-semibold text-ink transition hover:bg-marigold-dark disabled:cursor-not-allowed disabled:bg-line disabled:text-subink sm:w-auto"
-            title="Cart logic ships in Evaluation 2"
           >
             {product.stock === 0 ? "Out of stock" : "Add to Cart"}
           </button>
+
+          {added && (
+            <p className="mt-3 text-sm text-teal">
+              Added to cart.{" "}
+              <Link to="/cart" className="font-semibold underline">
+                View cart
+              </Link>
+            </p>
+          )}
         </div>
       </div>
 
